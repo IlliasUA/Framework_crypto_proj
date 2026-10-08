@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Liste de mes films</title>
+		<meta charset="utf-8">
+		<meta name="description" content="165c. uniques">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<!-- main css and js -->
+		<script type="text/javascript" src="js/jquery_3_3_1.js"></script>
+		<style type="text/css">
+		table {
+			text-align: center;
+		}
+		td {
+			margin: 15px;
+			padding: 10px;
+		}
+		h1 {
+			text-align: center;
+		}
+		</style>
+	</head>
+
+<body>
+
+	<div id="page">
+		<!-- Entête de la zone considérée -->
+		<header></header>
+
+		<!-- Nav. principale de la page -->
+		<nav>
+			<?php include $GLOBALS_INI["PATH_HOME"] . $GLOBALS_INI["PATH_FILES"] . "/nav.html" ?>
+		</nav>
+
+		<!-- Les à-cotés de la page -->
+		<aside></aside>
+
+		<!-- Contenu textuel de la page -->
+		<section>
+			<?php include $GLOBALS_INI["PATH_HOME"] . $GLOBALS_INI["PATH_FILES"] . $monPHP . ".html" ?>
+		</section>
+
+		<!-- Pied-de-page de la page -->
+		<footer></footer>
+	</div>
+
+</body>
+</html>
+
