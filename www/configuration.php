@@ -5,7 +5,7 @@
  * In this class, we are getting the config file configuration_dev.ini. 
  * If not found, we are getting the config file configuration_prod.ini.
  *
- * @package JiJou Project
+ * @package Illias Project
  * @subpackage configuration
  * @author @Afpa Lab Team
  * @copyright  1920-2080 The Afpa Lab Team Group Corporation World Company
@@ -32,4 +32,3 @@ Class Configuration	{
 }
 
 ?>
-

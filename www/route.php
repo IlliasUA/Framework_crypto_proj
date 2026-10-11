@@ -5,7 +5,7 @@
  * This is the main program of the project.
  * We must use this file, if we want to access of all others classes.
  *
- * @package JiJou Project
+ * @package Illias Project
  * @subpackage configuration
  * @author @Afpa Lab Team
  * @copyright  1920-2080 The Afpa Lab Team Group Corporation World Company

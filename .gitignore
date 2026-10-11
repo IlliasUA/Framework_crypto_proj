@@ -1,1 +1,10 @@
+.env
+.env.*
+!.env.example
+files/configuration_dev.ini
+files/configuration_prod.ini
 .DS_Store
+.vscode/
+.idea/
+*.log
+*.tmp
