@@ -17,17 +17,17 @@ Class Configuration	{
 	 * It returns the content of the file configuration.
 	 */
 	public static function getGlobalsINI() {
-		$DOCUMENT_ROOT= $_SERVER['DOCUMENT_ROOT'];
-		$aOfPaths= explode("/", $DOCUMENT_ROOT);
-		for ($i=count($aOfPaths)-1; $i>0; $i--)	{
-			$DOCUMENT_ROOT= str_replace($aOfPaths[$i], "", $DOCUMENT_ROOT);
-			$DOCUMENT_ROOT= str_replace("//", "/", $DOCUMENT_ROOT);
-			if (is_file($DOCUMENT_ROOT . "files/configuration_dev.ini"))	{
-				return parse_ini_file($DOCUMENT_ROOT . "files/configuration_dev.ini", false);
-			}  else if (is_file($DOCUMENT_ROOT . "files/configuration_prod.ini"))	{
-				return parse_ini_file($DOCUMENT_ROOT . "files/configuration_prod.ini", false);
+		$directory = __DIR__;
+		do {
+			// Remonter d'un seul niveau, meme si des dossiers portent le meme nom.
+			$directory = dirname($directory);
+			$configDirectory = $directory . "/files/";
+			if (is_file($configDirectory . "configuration_dev.ini")) {
+				return parse_ini_file($configDirectory . "configuration_dev.ini", false);
+			} else if (is_file($configDirectory . "configuration_prod.ini")) {
+				return parse_ini_file($configDirectory . "configuration_prod.ini", false);
 			}
-		}
+		} while (dirname($directory) !== $directory);
 	}
 }
 

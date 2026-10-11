@@ -1,17 +1,17 @@
 <?php
 /**
- * Class Gestion_crypto | file Gestion_crypto.php
+ * Class Gestion_exemple | file Gestion_exemple.php
  *
- * In this class, we show the interface "Gestion_crypto.html".
- * With this interface, we'll be able to add, edit, list, delete movies
+ * In this class, we show the interface "Gestion_exemple.html".
+ * With this interface, we'll be able to add, edit, list, delete examples
  *
- * @package Cinema Project
+ * @package JiJou Project
  * @subpackage configuration
  * @author @Afpa Lab Team
  * @copyright  1920-2080 The Afpa Lab Team Group Corporation World Company
  * @version v1.0
  */
-class Gestion_example	{
+class Gestion_exemple	{
 	
 	/**
 	 * public $resultat is used to store all datas needed for HTML Templates

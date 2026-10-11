@@ -40,7 +40,7 @@ if ((isset($_GET["page"])) && ($_GET["page"] != ""))	{
  * List of classes authorized when you are NOT connected.
  * If not, redirect to a specific class
  */
-$list_class = array("login", "index", "logout");
+$list_class = array("login", "index", "logout", "connexion");
 if(!isset($_SESSION["id_utilisateur"]) ||(isset($_SESSION["id_utilisateur"])&& $_SESSION["id_utilisateur"]= "")){
 	if(!in_array($monPHP, $list_class)){
 		$monPHP = "index";
@@ -51,7 +51,7 @@ if(!isset($_SESSION["id_utilisateur"]) ||(isset($_SESSION["id_utilisateur"])&& $
  * Test if classes exist.
  * If not, redirect to a specific class
  */
-if (!(file_exists($GLOBALS_INI["PATH_HOME"] . $GLOBALS_INI["PATH_CLASS"] .$version."/". $monPHP . ".php"))) {
+if (!(file_exists($GLOBALS_INI["PATH_HOME"] . $GLOBALS_INI["PATH_CLASS"] . $monPHP . ".php"))) {
 	$monPHP= "index";
 }
 
@@ -59,7 +59,7 @@ if (!(file_exists($GLOBALS_INI["PATH_HOME"] . $GLOBALS_INI["PATH_CLASS"] .$versi
  * Instantiation of the dynamic class
  */
 $myClass= ucfirst($monPHP);
-require $GLOBALS_INI["PATH_HOME"] . $GLOBALS_INI["PATH_CLASS"] .$version."/". $monPHP . ".php";
+require $GLOBALS_INI["PATH_HOME"] . $GLOBALS_INI["PATH_CLASS"] . $monPHP . ".php";
 $oMain= new $myClass();
 
 /**
