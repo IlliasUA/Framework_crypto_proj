@@ -1,0 +1,1 @@
+DELETE FROM notification_crypto WHERE id_cryptomonnaie = @id_cryptomonnaie

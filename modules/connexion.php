@@ -38,7 +38,7 @@ class Connexion	{
 	function main()	{
 		$_SESSION["id_utilisateur"]= 1;
 		error_log("id_utilisateur: ".$_SESSION["id_utilisateur"]);
-		header('location: gestion_exemple');
+		header('location: gestion_crypto');
 		exit;
 	}
 }

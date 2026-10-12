@@ -1,0 +1,413 @@
+<script type="text/javascript" src="js/jquery_3_3_1.js"></script>
+<link rel="stylesheet" type="text/css" href="css/datatables.min.css">
+<script type="text/javascript" charset="utf8" src="js/datatables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<!-- main css -->
+<style type="text/css">
+    /* Style modal saving in progress */
+    #divModalSaving {
+        background-image: url(images/chargement.gif);
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 1000;
+    }
+
+    /* Style modal all space */
+    .modalChanged {
+        display: none;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+    }
+</style>
+
+<!-- main js -->
+<script language="JavaScript">
+    window.aOfCryptos = <?php
+        echo json_encode(
+            isset($oMain->resultat["liste_crypto"])
+                ? $oMain->resultat["liste_crypto"]
+                : [],
+            JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+        );
+    ?>;
+</script>
+
+<script src="js/my_func.js"></script>
+
+<script language="JavaScript">
+    $(function () {
+        $("#form_crypto").on("submit", function () {
+            const strategies = $('input[name="strategies[]"]:checked')
+                .map(function () {
+                    return this.value;
+                })
+                .get()
+                .join(",");
+
+            const notifications = $('input[name="notifications[]"]:checked')
+                .map(function () {
+                    return this.value;
+                })
+                .get()
+                .join(",");
+
+            $("#strategies").val(strategies);
+            $("#notifications").val(notifications);
+
+            // Les checkbox désactivées ne sont pas envoyées comme tableaux PHP.
+            $('input[name="strategies[]"], input[name="notifications[]"]')
+                .prop("disabled", true);
+        });
+    });
+</script>
+
+<!-- content HTML -->
+<main id="page">
+    <header class="page-header">
+        <div>
+            <h1>Mon Portfolio</h1>
+        </div>
+
+        <div class="balance">
+            <p>
+                Solde :
+                <strong id="solde_total">0,00 $</strong>
+            </p>
+
+            <p>
+                Valeur du portfolio :
+                <strong id="valeur_portfolio">0,00 $</strong>
+            </p>
+        </div>
+    </header>
+
+    <section class="portfolio-section">
+        <div class="section-header">
+            <h2>Mes cryptomonnaies</h2>
+
+            <button
+                type="button"
+                class="btn btn-add"
+                id="btn_afficher_formulaire"
+                onclick="afficherFormulaire()"
+            >
+                Ajouter une crypto
+            </button>
+        </div>
+
+        <table id="table_cryptos"></table>
+    </section>
+
+    <section class="form-section hide" id="section_formulaire">
+        <h2 id="titre_formulaire">
+            Ajouter une cryptomonnaie
+        </h2>
+
+        <form id="form_crypto" method="post" action="route.php">
+            <input
+                type="hidden"
+                id="action_page"
+                name="page"
+                value="save_crypto"
+            >
+
+            <input
+                type="hidden"
+                id="id_crypto"
+                name="id_crypto"
+                value=""
+            >
+
+            <!-- Valeurs scalaires remplies avant l’envoi -->
+            <input
+                type="hidden"
+                id="strategies"
+                name="strategies"
+                value=""
+            >
+
+            <input
+                type="hidden"
+                id="notifications"
+                name="notifications"
+                value=""
+            >
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="nom_crypto">
+                        Nom de la crypto *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nom_crypto"
+                        name="nom_crypto"
+                        placeholder="Exemple : Bitcoin"
+                        maxlength="50"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="symbole_crypto">
+                        Symbole *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="symbole_crypto"
+                        name="symbole_crypto"
+                        placeholder="Exemple : BTC"
+                        maxlength="10"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="reseau">
+                        Réseau *
+                    </label>
+
+                    <select id="reseau" name="id_reseau" required>
+                        <option value="">
+                            Sélectionner un réseau
+                        </option>
+                        <option value="1">Bitcoin</option>
+                        <option value="2">Ethereum</option>
+                        <option value="3">BNB Smart Chain</option>
+                        <option value="4">Solana</option>
+                        <option value="5">XRP Ledger</option>
+                        <option value="6">Cardano</option>
+                        <option value="7">Avalanche</option>
+                        <option value="8">Polkadot</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantite">
+                        Quantité *
+                    </label>
+
+                    <input
+                        type="number"
+                        id="quantite"
+                        name="qntte_jetons"
+                        min="0.000001"
+                        step="0.000001"
+                        placeholder="0"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="prix_achat">
+                        Prix d'achat *
+                    </label>
+
+                    <input
+                        type="number"
+                        id="prix_achat"
+                        name="prix"
+                        min="0"
+                        step="0.01"
+                        placeholder="0.00"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="date_achat">
+                        Date d'achat *
+                    </label>
+
+                    <input
+                        type="date"
+                        id="date_achat"
+                        name="date_achat"
+                        required
+                    >
+                </div>
+            </div>
+
+            <fieldset class="form-fieldset">
+                <legend>Niveau de risque</legend>
+
+                <label class="choice">
+                    <input
+                        type="radio"
+                        name="id_niveau_risque"
+                        value="1"
+                        checked
+                    >
+                    Faible
+                </label>
+
+                <label class="choice">
+                    <input
+                        type="radio"
+                        name="id_niveau_risque"
+                        value="2"
+                    >
+                    Moyen
+                </label>
+
+                <label class="choice">
+                    <input
+                        type="radio"
+                        name="id_niveau_risque"
+                        value="3"
+                    >
+                    Élevé
+                </label>
+            </fieldset>
+
+            <fieldset class="form-fieldset">
+                <legend>Stratégies</legend>
+
+                <label class="choice">
+                    <input
+                        type="checkbox"
+                        name="strategies[]"
+                        value="1"
+                    >
+                    Conservation à long terme
+                </label>
+
+                <label class="choice">
+                    <input
+                        type="checkbox"
+                        name="strategies[]"
+                        value="2"
+                    >
+                    Achat périodique
+                </label>
+
+                <label class="choice">
+                    <input
+                        type="checkbox"
+                        name="strategies[]"
+                        value="3"
+                    >
+                    Trading à court terme
+                </label>
+
+                <label class="choice">
+                    <input
+                        type="checkbox"
+                        name="strategies[]"
+                        value="4"
+                    >
+                    Staking
+                </label>
+
+                <label class="choice">
+                    <input
+                        type="checkbox"
+                        name="strategies[]"
+                        value="5"
+                    >
+                    Diversification
+                </label>
+            </fieldset>
+
+            <fieldset class="form-fieldset">
+                <legend>Notifications</legend>
+
+                <label class="choice">
+                    <input
+                        type="checkbox"
+                        name="notifications[]"
+                        value="1"
+                    >
+                    Alerte de hausse de prix
+                </label>
+
+                <label class="choice">
+                    <input
+                        type="checkbox"
+                        name="notifications[]"
+                        value="2"
+                    >
+                    Alerte de baisse de prix
+                </label>
+
+                <label class="choice">
+                    <input
+                        type="checkbox"
+                        name="notifications[]"
+                        value="3"
+                    >
+                    Objectif de prix atteint
+                </label>
+
+                <label class="choice">
+                    <input
+                        type="checkbox"
+                        name="notifications[]"
+                        value="4"
+                    >
+                    Variation importante sur 24 heures
+                </label>
+
+                <label class="choice">
+                    <input
+                        type="checkbox"
+                        name="notifications[]"
+                        value="5"
+                    >
+                    Rappel de suivi du portefeuille
+                </label>
+            </fieldset>
+
+            <div class="form-group notes-group">
+                <label for="notes">
+                    Notes
+                </label>
+
+                <textarea
+                    id="notes"
+                    name="note"
+                    rows="5"
+                    maxlength="150"
+                    placeholder="Ajouter une remarque..."
+                ></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button
+                    type="submit"
+                    class="btn btn-add"
+                    id="btn_ajouter"
+                >
+                    Ajouter
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn btn-edit hide"
+                    id="btn_modifier"
+                >
+                    Enregistrer les modifications
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-cancel"
+                    onclick="annulerModification()"
+                >
+                    Annuler
+                </button>
+            </div>
+        </form>
+    </section>
+</main>
+
+<!-- CREATION MODAL ENREGISTREMENT EN COURS -->
+<div class="modalChanged" id="divModalSaving"></div>

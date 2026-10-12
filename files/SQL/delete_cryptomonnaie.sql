@@ -1,0 +1,1 @@
+delete from cryptomonnaie where id_cryptomonnaie=@cryptomonnaie
