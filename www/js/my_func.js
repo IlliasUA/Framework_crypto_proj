@@ -148,55 +148,95 @@ function annulerModification() {
 function editCrypto(iIndiceToEdit) {
     iIndiceEdited = iIndiceToEdit;
 
-    let crypto = aOfCryptos[iIndiceToEdit];
+    const crypto = aOfCryptos[iIndiceToEdit];
 
+    if (!crypto) {
+        return;
+    }
+
+    /*
+     * Remplissage des champs principaux.
+     */
     $("#nom_crypto").val(crypto["nom"]);
     $("#symbole_crypto").val(crypto["symbole"]);
     $("#reseau").val(String(crypto["id_reseau"]));
     $("#quantite").val(crypto["quantite"]);
     $("#prix_achat").val(crypto["prix"]);
     $("#date_achat").val(crypto["dateAchat"]);
-    $("#notes").val(crypto["notes"]);
+    $("#notes").val(crypto["notes"] || "");
 
+    /*
+     * Sélection du niveau de risque.
+     */
     $('input[name="id_niveau_risque"]').prop("checked", false);
+
     $(
         'input[name="id_niveau_risque"][value="' +
         crypto["id_niveau_risque"] +
         '"]'
     ).prop("checked", true);
 
+    /*
+     * Sélection des stratégies.
+     *
+     * La base transmet par exemple "1,3,5".
+     * split(",") transforme cette chaîne en ["1", "3", "5"].
+     */
     $('input[name="strategies[]"]').prop("checked", false);
-    for (let i = 0; i < (crypto["id_strategies"] || []).length; i++) {
+
+    const idsStrategies = String(
+        crypto["id_strategies"] || ""
+    )
+        .split(",")
+        .filter(Boolean);
+
+    for (let i = 0; i < idsStrategies.length; i++) {
         $(
             'input[name="strategies[]"][value="' +
-            crypto["id_strategies"][i] +
+            idsStrategies[i] +
             '"]'
         ).prop("checked", true);
     }
 
+    /*
+     * Sélection des notifications.
+     */
     $('input[name="notifications[]"]').prop("checked", false);
-    let idsNotifications =
-        crypto["id_notifications"] || crypto["id_notification"] || [];
 
-    for (let j = 0; j < idsNotifications.length; j++) {
+    const idsNotifications = String(
+        crypto["id_notifications"] || ""
+    )
+        .split(",")
+        .filter(Boolean);
+
+    for (let i = 0; i < idsNotifications.length; i++) {
         $(
             'input[name="notifications[]"][value="' +
-            idsNotifications[j] +
+            idsNotifications[i] +
             '"]'
         ).prop("checked", true);
     }
 
+    /*
+     * Préparation de la forme pour la modification.
+     */
     $("#titre_formulaire").text("Modifier la cryptomonnaie");
     $("#action_page").val("update_crypto");
     $("#id_crypto").val(crypto["id_cryptomonnaie"]);
+
     $("#btn_ajouter").addClass("hide");
     $("#btn_modifier").removeClass("hide");
     $("#section_formulaire").removeClass("hide");
 
-    document.getElementById("section_formulaire").scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
+    /*
+     * Déplacement vers la forme.
+     */
+    document
+        .getElementById("section_formulaire")
+        .scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
 }
 
 function supprimerCrypto(iIndiceToDelete) {

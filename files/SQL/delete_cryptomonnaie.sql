@@ -1,1 +1,2 @@
-delete from cryptomonnaie where id_cryptomonnaie=@cryptomonnaie
+DELETE FROM cryptomonnaie
+WHERE id_cryptomonnaie = @id_cryptomonnaie;

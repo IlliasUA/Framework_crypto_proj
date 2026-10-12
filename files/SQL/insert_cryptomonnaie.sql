@@ -8,12 +8,12 @@ INSERT INTO cryptomonnaie (
     date_achat,
     note
 ) VALUES (
-    :id_niveau_risque,
-    :id_reseau,
-    :nom_crypto,
-    :symbole_crypto,
-    :prix,
-    :qntte_jetons,
-    :date_achat,
-    :note
+    @id_niveau_risque,
+    @id_reseau,
+    "@nom_crypto",
+    "@symbole_crypto",
+    @prix,
+    @qntte_jetons,
+    "@date_achat",
+    "@note"
 );
