@@ -261,9 +261,73 @@ function supprimerCrypto(iIndiceToDelete) {
     form.submit();
 }
 
-$(document).ready(function () {
-    constructTable();
-    tableCryptos = $("#table_cryptos").DataTable(configuration);
-    calculerPortfolio();
+function loadCryptos() {
+    $("#divModalSaving").show();
 
+    const datas = {
+        page: "liste_crypto",
+        bJSON: 1
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "route.php",
+        async: true,
+        data: datas,
+        dataType: "json",
+        cache: false
+    })
+    .done(function (result) {
+        aOfCryptos = result;
+
+        constructTable();
+        tableCryptos = $("#table_cryptos").DataTable(configuration);
+        calculerPortfolio();
+
+        $("#divModalSaving").hide();
+    })
+    .fail(function (error) {
+        $("#divModalSaving").hide();
+        console.error(error.responseText);
+        alert("Erreur pendant le chargement des cryptomonnaies.");
+    });
+}
+
+function loadReseaux() {
+    $("#divModalSaving").show();
+
+    const datas = {
+        page: "liste_reseaux",
+        bJSON: 1
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "route.php",
+        async: true,
+        data: datas,
+        dataType: "json",
+        cache: false
+    })
+    .done(function (result) {
+        for (var i = 0; i < result.length; i++) {
+            var reseau = result[i];
+            var option = $("<option>")
+                .val(reseau["id_reseau"])
+                .text(reseau["nom_blockchain"]);
+            $("#reseau").append(option);
+        }
+        $("#divModalSaving").hide();
+    })
+    .fail(function (error) {
+        $("#divModalSaving").hide();
+        console.error(error.responseText);
+        alert("Erreur pendant le chargement des réseaux.");
+    });
+}
+
+$(document).ready(function() {
+    loadReseaux();
+    loadCryptos();
 });
+

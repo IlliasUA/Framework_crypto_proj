@@ -28,14 +28,7 @@
 
 <!-- main js -->
 <script language="JavaScript">
-    window.aOfCryptos = <?php
-        echo json_encode(
-            isset($oMain->resultat["liste_crypto"])
-                ? $oMain->resultat["liste_crypto"]
-                : [],
-            JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
-        );
-    ?>;
+   let aOfCryptos = [];
 </script>
 
 <script src="js/my_func.js"></script>
@@ -179,14 +172,6 @@
                         <option value="">
                             Sélectionner un réseau
                         </option>
-                        <option value="1">Bitcoin</option>
-                        <option value="2">Ethereum</option>
-                        <option value="3">BNB Smart Chain</option>
-                        <option value="4">Solana</option>
-                        <option value="5">XRP Ledger</option>
-                        <option value="6">Cardano</option>
-                        <option value="7">Avalanche</option>
-                        <option value="8">Polkadot</option>
                     </select>
                 </div>
 
@@ -239,131 +224,72 @@
             <fieldset class="form-fieldset">
                 <legend>Niveau de risque</legend>
 
-                <label class="choice">
-                    <input
-                        type="radio"
-                        name="id_niveau_risque"
-                        value="1"
-                        checked
-                    >
-                    Faible
-                </label>
+                <?php foreach (
+                    $oMain->resultat["niveaux_risque"]
+                    as $index => $niveau
+                ) { ?>
+                    <label class="choice">
+                        <input
+                            type="radio"
+                            name="id_niveau_risque"
+                            value="<?= (int) $niveau["id_niveau_risque"] ?>"
+                            <?= $index === 0 ? "checked" : "" ?>
+                            required
+                        >
 
-                <label class="choice">
-                    <input
-                        type="radio"
-                        name="id_niveau_risque"
-                        value="2"
-                    >
-                    Moyen
-                </label>
-
-                <label class="choice">
-                    <input
-                        type="radio"
-                        name="id_niveau_risque"
-                        value="3"
-                    >
-                    Élevé
-                </label>
+                        <?= htmlspecialchars(
+                            $niveau["risque"],
+                            ENT_QUOTES,
+                            "UTF-8"
+                        ) ?>
+                    </label>
+                <?php } ?>
             </fieldset>
 
             <fieldset class="form-fieldset">
                 <legend>Stratégies</legend>
 
-                <label class="choice">
-                    <input
-                        type="checkbox"
-                        name="strategies[]"
-                        value="1"
-                    >
-                    Conservation à long terme
-                </label>
+                <?php foreach (
+                    $oMain->resultat["strategies"]
+                    as $strategie
+                ) { ?>
+                    <label class="choice">
+                        <input
+                            type="checkbox"
+                            name="strategies[]"
+                            value="<?= (int) $strategie["id_strategies"] ?>"
+                        >
 
-                <label class="choice">
-                    <input
-                        type="checkbox"
-                        name="strategies[]"
-                        value="2"
-                    >
-                    Achat périodique
-                </label>
-
-                <label class="choice">
-                    <input
-                        type="checkbox"
-                        name="strategies[]"
-                        value="3"
-                    >
-                    Trading à court terme
-                </label>
-
-                <label class="choice">
-                    <input
-                        type="checkbox"
-                        name="strategies[]"
-                        value="4"
-                    >
-                    Staking
-                </label>
-
-                <label class="choice">
-                    <input
-                        type="checkbox"
-                        name="strategies[]"
-                        value="5"
-                    >
-                    Diversification
-                </label>
+                        <?= htmlspecialchars(
+                            $strategie["nom_strategies"],
+                            ENT_QUOTES,
+                            "UTF-8"
+                        ) ?>
+                    </label>
+                <?php } ?>
             </fieldset>
 
             <fieldset class="form-fieldset">
                 <legend>Notifications</legend>
 
-                <label class="choice">
-                    <input
-                        type="checkbox"
-                        name="notifications[]"
-                        value="1"
-                    >
-                    Alerte de hausse de prix
-                </label>
+                <?php foreach (
+                    $oMain->resultat["notifications"]
+                    as $notification
+                ) { ?>
+                    <label class="choice">
+                        <input
+                            type="checkbox"
+                            name="notifications[]"
+                            value="<?= (int) $notification["id_notification"] ?>"
+                        >
 
-                <label class="choice">
-                    <input
-                        type="checkbox"
-                        name="notifications[]"
-                        value="2"
-                    >
-                    Alerte de baisse de prix
-                </label>
-
-                <label class="choice">
-                    <input
-                        type="checkbox"
-                        name="notifications[]"
-                        value="3"
-                    >
-                    Objectif de prix atteint
-                </label>
-
-                <label class="choice">
-                    <input
-                        type="checkbox"
-                        name="notifications[]"
-                        value="4"
-                    >
-                    Variation importante sur 24 heures
-                </label>
-
-                <label class="choice">
-                    <input
-                        type="checkbox"
-                        name="notifications[]"
-                        value="5"
-                    >
-                    Rappel de suivi du portefeuille
-                </label>
+                        <?= htmlspecialchars(
+                            $notification["type_notification"],
+                            ENT_QUOTES,
+                            "UTF-8"
+                        ) ?>
+                    </label>
+                <?php } ?>
             </fieldset>
 
             <div class="form-group notes-group">

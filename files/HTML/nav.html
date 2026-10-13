@@ -1,8 +1,23 @@
 <div style="display: flex; justify-content: space-between; align-items: center;">
-    <div><p>Tu es connecter!</p></div>
+    <div id="welcome-message"><p>Tu es connecté !</p></div>
     <div>
         <p>
-            <button onClick="window.location.href='logout'">Se déconnecter</button>	
+            <button
+                type="button"
+                class="logout-button"
+                onClick="window.location.href='logout'"
+            >
+                Se déconnecter
+            </button>
         </p>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const message = document.getElementById("welcome-message");
+
+        setTimeout(function () {
+            message.classList.add("welcome-message-hidden");
+        }, 3000);
+    });
+</script>

@@ -1,0 +1,10 @@
+<?php
+
+echo json_encode(
+    isset($oMain->resultat["liste_crypto"])
+        ? $oMain->resultat["liste_crypto"]
+        : array(),
+    JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+);
+
+?>

@@ -30,6 +30,59 @@
         }
 
         /**
+ * Charge les données nécessaires pour construire le formulaire.
+ */
+        public function liste_referentiels() {
+            /*
+            * Liste des réseaux.
+            */
+            $spathSQL = $this->GLOBALS_INI["PATH_HOME"]
+                    . $this->GLOBALS_INI["PATH_SQL"]
+                    . "select_reseaux.sql";
+
+            $this->resultat["reseaux"] = $this->oBdd->getSelectDatas(
+                $spathSQL,
+                array()
+            );
+
+            /*
+            * Liste des niveaux de risque.
+            */
+            $spathSQL = $this->GLOBALS_INI["PATH_HOME"]
+                    . $this->GLOBALS_INI["PATH_SQL"]
+                    . "select_niveaux_risque.sql";
+
+            $this->resultat["niveaux_risque"] = $this->oBdd->getSelectDatas(
+                $spathSQL,
+                array()
+            );
+
+            /*
+            * Liste des stratégies.
+            */
+            $spathSQL = $this->GLOBALS_INI["PATH_HOME"]
+                    . $this->GLOBALS_INI["PATH_SQL"]
+                    . "select_strategies.sql";
+
+            $this->resultat["strategies"] = $this->oBdd->getSelectDatas(
+                $spathSQL,
+                array()
+            );
+
+            /*
+            * Liste des notifications.
+            */
+            $spathSQL = $this->GLOBALS_INI["PATH_HOME"]
+                    . $this->GLOBALS_INI["PATH_SQL"]
+                    . "select_notifications.sql";
+
+            $this->resultat["notifications"] = $this->oBdd->getSelectDatas(
+                $spathSQL,
+                array()
+            );
+        }
+
+        /**
          * Method save_film()
          *
          * Insert a new movie in database
@@ -371,6 +424,19 @@
                     . "select_cryptomonnaie.sql";
 
             $this->resultat["liste_crypto"] =
+                $this->oBdd->getSelectDatas($spathSQL, array());
+        }
+
+        /**
+         * Récupère tous les réseaux.
+         */
+        public function liste_reseaux()
+        {
+            $spathSQL = $this->GLOBALS_INI["PATH_HOME"]
+                    . $this->GLOBALS_INI["PATH_SQL"]
+                    . "select_reseaux.sql";
+
+            $this->resultat["liste_reseaux"] =
                 $this->oBdd->getSelectDatas($spathSQL, array());
         }
     }  

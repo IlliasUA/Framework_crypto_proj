@@ -1,41 +1,98 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<title>Nom du projet</title>
-		<meta charset="utf-8">
-		<meta name="description" content="165c. uniques">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<style type="text/css">
-		h1, p {
-			text-align: center;
-		}
-		</style>
-	</head>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+        name="description"
+        content="Gérez simplement votre portefeuille de cryptomonnaies."
+    >
+    <title>My Crypto Wallet</title>
+    <link rel="icon" type="image/png" href="images/Bitcoin_Cash.png">
+    <link rel="stylesheet" href="css/index.css">
+</head>
 
 <body>
+    <header class="guest-header">
+        <a class="brand" href="index" aria-label="Accueil My Crypto Wallet">
+            <img
+                class="brand-logo"
+                src="images/Bitcoin_Cash.png"
+                alt="Logo My Crypto Wallet"
+            >
+            <span>My Crypto Wallet</span>
+        </a>
 
-	<div id="page">
-		<!-- Entête de la zone considérée -->
-		<header></header>
+        <a class="login-button" href="login">Se connecter</a>
+    </header>
 
-		<!-- Nav. principale de la page -->
-		<nav></nav>
+    <main>
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-content">
+                <p class="eyebrow">Votre portefeuille, en toute simplicité</p>
+                <h1 id="hero-title">Gérez votre portefeuille crypto simplement</h1>
+                <p class="hero-description">
+                    Suivez vos actifs et gardez le contrôle de votre portefeuille
+                    depuis une interface claire et intuitive.
+                </p>
+            </div>
 
-		<!-- Les à-cotés de la page -->
-		<aside></aside>
+            <div class="hero-visual">
+                <img
+                    src="images/portfolio-guest.png"
+                    alt="Aperçu du tableau de bord permettant de consulter, ajouter, modifier et supprimer des cryptomonnaies"
+                >
+            </div>
+        </section>
 
-		<!-- Contenu textuel de la page -->
-		<section>
-			<h1>Accueil du site</h1>
-			<p>
-				<button onClick="window.location.href='login'">Se connecter</button>	
-			</p>
-		</section>
+        <section class="features" aria-labelledby="features-title">
+            <div class="section-heading">
+                <p class="eyebrow">Fonctionnalités</p>
+                <h2 id="features-title">Tout ce dont vous avez besoin</h2>
+            </div>
 
-		<!-- Pied-de-page de la page -->
-		<footer></footer>
-	</div>
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <span class="feature-icon feature-icon-view" aria-hidden="true">◉</span>
+                    <h3>Consulter</h3>
+                    <p>
+                        Visualisez vos cryptomonnaies, leurs quantités, leurs prix
+                        d'achat et la valeur totale de votre portefeuille.
+                    </p>
+                </article>
 
+                <article class="feature-card">
+                    <span class="feature-icon feature-icon-add" aria-hidden="true">+</span>
+                    <h3>Ajouter</h3>
+                    <p>
+                        Enregistrez une nouvelle cryptomonnaie avec son réseau,
+                        son prix, sa quantité et son niveau de risque.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <span class="feature-icon feature-icon-edit" aria-hidden="true">✎</span>
+                    <h3>Modifier</h3>
+                    <p>
+                        Mettez à jour les informations de vos actifs lorsque
+                        votre portefeuille évolue.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <span class="feature-icon feature-icon-delete" aria-hidden="true">×</span>
+                    <h3>Supprimer</h3>
+                    <p>
+                        Retirez rapidement les cryptomonnaies que vous ne
+                        souhaitez plus suivre.
+                    </p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="guest-footer">
+        <p>My Crypto Wallet — Gérez vos actifs en toute simplicité.</p>
+    </footer>
 </body>
 </html>
-			

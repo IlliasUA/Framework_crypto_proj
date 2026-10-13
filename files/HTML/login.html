@@ -1,62 +1,104 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<title>Connection</title>
-		<meta charset="utf-8">
-		<meta name="description" content="165c. uniques">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<!-- main css and js -->
-		<script type="text/javascript" src="js/jquery_3_3_1.js"></script>
-		<style type="text/css">
-		h1 {
-			text-align: center;
-		}
-		</style>
-	</head>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+        name="description"
+        content="Connectez-vous à votre portefeuille de cryptomonnaies."
+    >
+    <title>Connexion — My Crypto Wallet</title>
+    <link rel="icon" type="image/png" href="images/Bitcoin_Cash.png">
+    <link rel="stylesheet" href="css/login.css">
+</head>
 
 <body>
+    <main class="login-page">
+        <section class="login-card" aria-labelledby="login-title">
+            <div class="login-panel">
+                <a class="brand" href="index" aria-label="Retour à l'accueil">
+                    <img
+                        class="brand-logo"
+                        src="images/Bitcoin_Cash.png"
+                        alt="Logo My Crypto Wallet"
+                    >
+                    <span>My Crypto Wallet</span>
+                </a>
 
-	<div id="page">
-		<!-- Entête de la zone considérée -->
-		<header></header>
+                <div class="login-content">
+                    <p class="eyebrow">Espace personnel</p>
+                    <h1 id="login-title">Bienvenue</h1>
+                    <p class="login-introduction">
+                        Connectez-vous pour consulter et gérer votre portefeuille.
+                    </p>
 
-		<!-- Nav. principale de la page -->
-		<nav>
-		</nav>
+                    <form class="login-form" action="route.php" method="post">
+                        <input type="hidden" name="page" value="connexion">
 
-		<!-- Les à-cotés de la page -->
-		<aside></aside>
+                        <div class="form-group">
+                            <label for="login_utilisateur">Login</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon" aria-hidden="true">@</span>
+                                <input
+                                    type="text"
+                                    name="login_utilisateur"
+                                    id="login_utilisateur"
+                                    placeholder="Votre login"
+                                    autocomplete="username"
+                                    oninvalid="this.setCustomValidity('Veuillez renseigner votre login.')"
+                                    oninput="this.setCustomValidity('')"
+                                    required
+                                >
+                            </div>
+                        </div>
 
-		<!-- Contenu textuel de la page -->
-		<section>
-			<h1>Connection</h1>
-			<form action="route.php" method="POST">
-				<p>
-					Page du PHP : 
-					<input type="text" name="page" id="page" value="connexion">
-				</p>
-				<p>
-					Login : 
-					<input type="text" name="login_utilisateur" id="login_utilisateur" value="">
-				</p>
-				<p>
-					Mot de passe : 
-					<input type="text" name="mdp_utilisateur" id="mdp_utilisateur" value="">
-				</p>
-				<p>
-					<input type="submit" value="SE CONNECTER">
-				</p>
-			</form>
-		</section>
+                        <div class="form-group">
+                            <label for="mdp_utilisateur">Mot de passe</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon" aria-hidden="true">●</span>
+                                <input
+                                    type="password"
+                                    name="mdp_utilisateur"
+                                    id="mdp_utilisateur"
+                                    placeholder="Votre mot de passe"
+                                    autocomplete="current-password"
+                                    oninvalid="this.setCustomValidity('Veuillez renseigner votre mot de passe.')"
+                                    oninput="this.setCustomValidity('')"
+                                    required
+                                >
+                            </div>
+                            <a
+                                class="forgot-password"
+                                href="#"
+                                onclick="return false;"
+                                aria-disabled="true"
+                            >
+                                Mot de passe oublié ?
+                            </a>
+                        </div>
 
-		<!-- Pied-de-page de la page -->
-		<footer></footer>
-	</div>
+                        <button class="submit-button" type="submit">
+                            Se connecter
+                            <span aria-hidden="true">→</span>
+                        </button>
 
+                        <a
+                            class="create-account"
+                            href="#"
+                            onclick="return false;"
+                            aria-disabled="true"
+                        >
+                            Créer un compte
+                        </a>
+                    </form>
+                </div>
+            </div>
+
+            <div class="illustration-panel" aria-hidden="true">
+                <div class="illustration-glow"></div>
+                <img src="images/crypto_my.png" alt="">
+            </div>
+        </section>
+    </main>
 </body>
 </html>
-
-
-
-
-
