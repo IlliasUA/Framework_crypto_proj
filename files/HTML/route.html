@@ -38,7 +38,21 @@
 
 		<!-- Contenu textuel de la page -->
 		<section>
-			<?php include $GLOBALS_INI["PATH_HOME"] . $GLOBALS_INI["PATH_FILES"] . $monPHP . ".html" ?>
+			<?php
+
+				$viewFolder = "";
+
+				if (str_starts_with($monPHP, "gestion_")) {
+					$viewFolder = "gestion/";
+				}
+
+				include $GLOBALS_INI["PATH_HOME"]
+					. $GLOBALS_INI["PATH_FILES"]
+					. $viewFolder
+					. $monPHP
+					. ".html";
+
+			?>
 		</section>
 
 		<!-- Pied-de-page de la page -->

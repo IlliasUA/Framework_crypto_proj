@@ -326,8 +326,162 @@ function loadReseaux() {
     });
 }
 
+function loadNiveauxRisque() {
+    $("#divModalSaving").show();
+
+    const datas = {
+        page: "liste_niveaux_risque",
+        bJSON: 1
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "route.php",
+        async: true,
+        data: datas,
+        dataType: "json",
+        cache: false
+    })
+    .done(function (result) {
+        $("#niveaux_risque_container .choice").remove();
+
+        for (let i = 0; i < result.length; i++) {
+            const niveau = result[i];
+
+            const input = $("<input>")
+                .attr("type", "radio")
+                .attr("name", "id_niveau_risque")
+                .val(niveau["id_niveau_risque"])
+                .prop("required", true);
+
+            // Premier niveau sélectionné par défaut.
+            if (i === 0) {
+                input.prop("checked", true);
+            }
+
+            const label = $("<label>")
+                .addClass("choice")
+                .append(input)
+                .append(
+                    document.createTextNode(
+                        " " + niveau["risque"]
+                    )
+                );
+
+            $("#niveaux_risque_container").append(label);
+        }
+
+        $("#divModalSaving").hide();
+    })
+    .fail(function (error) {
+        $("#divModalSaving").hide();
+        console.error(error.responseText);
+        alert("Erreur pendant le chargement des niveaux de risque.");
+    });
+}
+function loadStrategies() {
+    $("#divModalSaving").show();
+
+    const datas = {
+        page: "liste_strategies",
+        bJSON: 1
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "route.php",
+        async: true,
+        data: datas,
+        dataType: "json",
+        cache: false
+    })
+    .done(function (result) {
+        // Suppression des anciennes stratégies pour éviter les doublons.
+        $("#strategies_container .choice").remove();
+
+        for (let i = 0; i < result.length; i++) {
+            const strategie = result[i];
+
+            const input = $("<input>")
+                .attr("type", "checkbox")
+                .attr("name", "strategies[]")
+                .val(strategie["id_strategies"]);
+
+            const label = $("<label>")
+                .addClass("choice")
+                .append(input)
+                .append(
+                    document.createTextNode(
+                        " " + strategie["nom_strategies"]
+                    )
+                );
+
+            $("#strategies_container").append(label);
+        }
+
+        $("#divModalSaving").hide();
+    })
+    .fail(function (error) {
+        $("#divModalSaving").hide();
+        console.error(error.responseText);
+        alert("Erreur pendant le chargement des stratégies.");
+    });
+}
+
+function loadNotifications() {
+    $("#divModalSaving").show();
+
+    const datas = {
+        page: "liste_notifications",
+        bJSON: 1
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "route.php",
+        async: true,
+        data: datas,
+        dataType: "json",
+        cache: false
+    })
+    .done(function (result) {
+        // Suppression des anciennes notifications pour éviter les doublons.
+        $("#notifications_container .choice").remove();
+
+        for (let i = 0; i < result.length; i++) {
+            const notification = result[i];
+
+            const input = $("<input>")
+                .attr("type", "checkbox")
+                .attr("name", "notifications[]")
+                .val(notification["id_notification"]);
+
+            const label = $("<label>")
+                .addClass("choice")
+                .append(input)
+                .append(
+                    document.createTextNode(
+                        " " + notification["type_notification"]
+                    )
+                );
+
+            $("#notifications_container").append(label);
+        }
+
+        $("#divModalSaving").hide();
+    })
+    .fail(function (error) {
+        $("#divModalSaving").hide();
+        console.error(error.responseText);
+        alert("Erreur pendant le chargement des notifications.");
+    });
+}
+
 $(document).ready(function() {
     loadReseaux();
     loadCryptos();
+    loadNiveauxRisque();
+    loadStrategies();
+    loadNotifications();
 });
 

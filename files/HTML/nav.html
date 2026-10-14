@@ -1,16 +1,47 @@
 <div style="display: flex; justify-content: space-between; align-items: center;">
+    
     <div id="welcome-message"><p>Tu es connecté !</p></div>
-    <div>
-        <p>
-            <button
-                type="button"
-                class="logout-button"
-                onClick="window.location.href='logout'"
-            >
-                Se déconnecter
-            </button>
-        </p>
-    </div>
+    <div class="navigation-actions">
+    <button
+        type="button"
+        class="btn btn-edit btn-table"
+        onclick="window.location.href='gestion_reseaux'"
+    >
+        Gestion des réseaux
+    </button>
+
+    <button
+        type="button"
+        class="btn btn-edit btn-table"
+        onclick="window.location.href='gestion_notifications'"
+    >
+        Gestion des notifications
+    </button>
+
+    <button
+        type="button"
+        class="btn btn-edit btn-table"
+        onclick="window.location.href='gestion_strategies'"
+    >
+        Gestion des stratégies
+    </button>
+
+    <button
+        type="button"
+        class="btn btn-edit btn-table"
+        onclick="window.location.href='gestion_risques'"
+    >
+        Gestion des risques
+    </button>
+
+    <button
+        type="button"
+        class="logout-button"
+        onclick="window.location.href='logout'"
+    >
+        Se déconnecter
+    </button>
+</div>
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {

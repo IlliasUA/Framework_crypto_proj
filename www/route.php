@@ -66,9 +66,22 @@ $oMain= new $myClass();
  * Call the view "route.html".
  * If parameter bJSON is passed and set to 1, we load another HTML page.
  */
-$page_to_load= "route.html";
-if (((isset($oMain->VARS_HTML["bJSON"])) && ($oMain->VARS_HTML["bJSON"] == 1)) || (in_array($monPHP, $list_class)))	{
-	$page_to_load= $monPHP . ".html";
+$page_to_load = "route.html";
+
+/*
+ * Les réponses JSON sont rangées dans HTML/lists.
+ */
+if (
+    isset($oMain->VARS_HTML["bJSON"])
+    && $oMain->VARS_HTML["bJSON"] == 1
+) {
+    $page_to_load = "lists/" . $monPHP . ".html";
+}
+/*
+ * Les pages accessibles sans connexion restent dans HTML.
+ */
+else if (in_array($monPHP, $list_class)) {
+    $page_to_load = $monPHP . ".html";
 }
 
 

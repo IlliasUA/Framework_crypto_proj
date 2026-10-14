@@ -1,0 +1,10 @@
+<?php
+
+echo json_encode(
+    isset($oMain->resultat["liste_niveaux_risque"])
+        ? $oMain->resultat["liste_niveaux_risque"]
+        : array(),
+    JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+);
+
+?>

@@ -1,0 +1,99 @@
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="css/datatables.min.css"
+>
+
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="css/style.css"
+>
+
+<script
+    type="text/javascript"
+    src="js/datatables.min.js"
+></script>
+
+<main>
+    <header class="page-header">
+        <div>
+            <h1>Gestion des notifications</h1>
+            <p>
+                Ajouter et consulter les types de notification.
+            </p>
+        </div>
+    </header>
+
+    <section class="form-section">
+        <h2>Ajouter une notification</h2>
+
+        <form
+            id="form_notification"
+            method="post"
+            action="route.php"
+        >
+            <input
+                type="hidden"
+                name="page"
+                value="save_notification"
+            >
+
+            <div class="form-group">
+                <label for="type_notification">
+                    Type de notification *
+                </label>
+
+                <input
+                    type="text"
+                    id="type_notification"
+                    name="type_notification"
+                    maxlength="150"
+                    placeholder="Exemple : Alerte de volatilité"
+                    required
+                >
+            </div>
+
+            <div class="form-actions">
+                <button
+                    type="submit"
+                    class="btn btn-add"
+                >
+                    Ajouter
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-cancel"
+                    onclick="window.location.href='gestion_crypto'"
+                >
+                    Retour au portfolio
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <section class="portfolio-section">
+        <div class="section-header">
+            <h2>Notifications existantes</h2>
+        </div>
+
+        <table id="table_notifications">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Type de notification</th>
+                </tr>
+            </thead>
+
+            <tbody></tbody>
+        </table>
+    </section>
+</main>
+
+<div
+    class="modalChanged"
+    id="divModalSaving"
+></div>
+
+<script src="js/gestion_notifications.js"></script>

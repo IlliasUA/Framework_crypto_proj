@@ -1,5 +1,4 @@
 <?php
-require_once "crypto_service.php";
 /**
  * Class Gestion_crypto | file Gestion_crypto.php
  *
@@ -27,18 +26,7 @@ class Gestion_crypto
 
     public function main()
     {
-        $obj_crypto = new Crypto_service();
-        $obj_crypto->liste_crypto();
-        /*
-        * Chargement des réseaux, niveaux de risque,
-        * stratégies et notifications.
-        */
-        $obj_crypto->liste_referentiels();
-
-        $this->resultat = $obj_crypto->resultat;
-        $this->VARS_HTML = $obj_crypto->VARS_HTML;
-
-        unset($obj_crypto);
+        // Les données sont chargées avec AJAX.
     }
 }
 

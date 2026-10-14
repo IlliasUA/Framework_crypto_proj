@@ -1,0 +1,99 @@
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="css/datatables.min.css"
+>
+
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="css/style.css"
+>
+
+<script
+    type="text/javascript"
+    src="js/datatables.min.js"
+></script>
+
+<main>
+    <header class="page-header">
+        <div>
+            <h1>Gestion des risques</h1>
+            <p>
+                Ajouter et consulter les niveaux de risque.
+            </p>
+        </div>
+    </header>
+
+    <section class="form-section">
+        <h2>Ajouter un niveau de risque</h2>
+
+        <form
+            id="form_risque"
+            method="post"
+            action="route.php"
+        >
+            <input
+                type="hidden"
+                name="page"
+                value="save_risque"
+            >
+
+            <div class="form-group">
+                <label for="risque">
+                    Niveau de risque *
+                </label>
+
+                <input
+                    type="text"
+                    id="risque"
+                    name="risque"
+                    maxlength="50"
+                    placeholder="Exemple : Très élevé"
+                    required
+                >
+            </div>
+
+            <div class="form-actions">
+                <button
+                    type="submit"
+                    class="btn btn-add"
+                >
+                    Ajouter
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-cancel"
+                    onclick="window.location.href='gestion_crypto'"
+                >
+                    Retour au portfolio
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <section class="portfolio-section">
+        <div class="section-header">
+            <h2>Niveaux de risque existants</h2>
+        </div>
+
+        <table id="table_risques">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Niveau de risque</th>
+                </tr>
+            </thead>
+
+            <tbody></tbody>
+        </table>
+    </section>
+</main>
+
+<div
+    class="modalChanged"
+    id="divModalSaving"
+></div>
+
+<script src="js/gestion_risques.js"></script>

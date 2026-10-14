@@ -439,5 +439,199 @@
             $this->resultat["liste_reseaux"] =
                 $this->oBdd->getSelectDatas($spathSQL, array());
         }
+
+        /**
+         * Récupère tous les niveaux de risque.
+         */
+        public function liste_niveaux_risque()
+        {
+            $spathSQL = $this->GLOBALS_INI["PATH_HOME"]
+                    . $this->GLOBALS_INI["PATH_SQL"]
+                    . "select_niveaux_risque.sql";
+
+            $this->resultat["liste_niveaux_risque"] =
+                $this->oBdd->getSelectDatas(
+                    $spathSQL,
+                    array()
+                );
+        }
+
+        public function liste_strategies()
+        {
+            $spathSQL = $this->GLOBALS_INI["PATH_HOME"]
+                    . $this->GLOBALS_INI["PATH_SQL"]
+                    . "select_strategies.sql";
+
+            $this->resultat["liste_strategies"] =
+                $this->oBdd->getSelectDatas(
+                    $spathSQL,
+                    array()
+                );
+        }
+
+        public function liste_notifications()
+        {
+            $spathSQL = $this->GLOBALS_INI["PATH_HOME"]
+                    . $this->GLOBALS_INI["PATH_SQL"]
+                    . "select_notifications.sql";
+
+            $this->resultat["liste_notifications"] =
+                $this->oBdd->getSelectDatas(
+                    $spathSQL,
+                    array()
+                );
+        }
+
+        /**
+         * Ajoute un nouveau réseau.
+         */
+        public function save_reseau()
+        {
+            $nomBlockchain = isset($this->VARS_HTML["nom_blockchain"])
+                ? trim($this->VARS_HTML["nom_blockchain"])
+                : "";
+
+            if ($nomBlockchain == "") {
+                $this->resultat["save_reseau"] = array(
+                    "error" => "Le nom du réseau est obligatoire."
+                );
+
+                return;
+            }
+
+            $spathSQL = $this->GLOBALS_INI["PATH_HOME"]
+                    . $this->GLOBALS_INI["PATH_SQL"]
+                    . "insert_reseau.sql";
+
+            $this->resultat["save_reseau"] =
+                $this->oBdd->treatDatas(
+                    $spathSQL,
+                    array(
+                        "nom_blockchain" => $nomBlockchain
+                    )
+                );
+
+            if ($this->resultat["save_reseau"]["error"] == "") {
+                $this->resultat["id_reseau_created"] =
+                    $this->oBdd->getLastInsertId();
+            }
+        }
+
+        /**
+         * Ajoute un nouveau type de notification.
+         */
+        public function save_notification()
+        {
+            $typeNotification =
+                isset($this->VARS_HTML["type_notification"])
+                    ? trim($this->VARS_HTML["type_notification"])
+                    : "";
+
+            if ($typeNotification == "") {
+                $this->resultat["save_notification"] = array(
+                    "error" =>
+                        "Le type de notification est obligatoire."
+                );
+
+                return;
+            }
+
+            $spathSQL = $this->GLOBALS_INI["PATH_HOME"]
+                    . $this->GLOBALS_INI["PATH_SQL"]
+                    . "insert_notification.sql";
+
+            $this->resultat["save_notification"] =
+                $this->oBdd->treatDatas(
+                    $spathSQL,
+                    array(
+                        "type_notification" => $typeNotification
+                    )
+                );
+
+            if (
+                $this->resultat["save_notification"]["error"] == ""
+            ) {
+                $this->resultat["id_notification_created"] =
+                    $this->oBdd->getLastInsertId();
+            }
+        }
+
+        /**
+         * Ajoute une nouvelle stratégie.
+         */
+        public function save_strategie()
+        {
+            $nomStrategie =
+                isset($this->VARS_HTML["nom_strategies"])
+                    ? trim($this->VARS_HTML["nom_strategies"])
+                    : "";
+
+            if ($nomStrategie == "") {
+                $this->resultat["save_strategie"] = array(
+                    "error" =>
+                        "Le nom de la stratégie est obligatoire."
+                );
+
+                return;
+            }
+
+            $spathSQL = $this->GLOBALS_INI["PATH_HOME"]
+                    . $this->GLOBALS_INI["PATH_SQL"]
+                    . "insert_strategie.sql";
+
+            $this->resultat["save_strategie"] =
+                $this->oBdd->treatDatas(
+                    $spathSQL,
+                    array(
+                        "nom_strategies" => $nomStrategie
+                    )
+                );
+
+            if (
+                $this->resultat["save_strategie"]["error"] == ""
+            ) {
+                $this->resultat["id_strategie_created"] =
+                    $this->oBdd->getLastInsertId();
+            }
+        }
+
+        /**
+         * Ajoute un nouveau niveau de risque.
+         */
+        public function save_risque()
+        {
+            $nomRisque =
+                isset($this->VARS_HTML["risque"])
+                    ? trim($this->VARS_HTML["risque"])
+                    : "";
+
+            if ($nomRisque == "") {
+                $this->resultat["save_risque"] = array(
+                    "error" =>
+                        "Le niveau de risque est obligatoire."
+                );
+
+                return;
+            }
+
+            $spathSQL = $this->GLOBALS_INI["PATH_HOME"]
+                    . $this->GLOBALS_INI["PATH_SQL"]
+                    . "insert_risque.sql";
+
+            $this->resultat["save_risque"] =
+                $this->oBdd->treatDatas(
+                    $spathSQL,
+                    array(
+                        "risque" => $nomRisque
+                    )
+                );
+
+            if (
+                $this->resultat["save_risque"]["error"] == ""
+            ) {
+                $this->resultat["id_risque_created"] =
+                    $this->oBdd->getLastInsertId();
+            }
+        }
     }  
 ?>
