@@ -26,7 +26,9 @@
     </header>
 
     <section class="form-section">
-        <h2>Ajouter une stratégie</h2>
+        <h2 id="form_title_strategie">
+            Ajouter une stratégie
+        </h2>
 
         <form
             id="form_strategie"
@@ -37,6 +39,13 @@
                 type="hidden"
                 name="page"
                 value="save_strategie"
+            >
+
+            <input
+                type="hidden"
+                id="id_strategies"
+                name="id_strategies"
+                value=""
             >
 
             <div class="form-group">
@@ -56,10 +65,30 @@
 
             <div class="form-actions">
                 <button
-                    type="submit"
+                    type="button"
+                    id="btn_ajouter_strategie"
                     class="btn btn-add"
+                    onclick="ajoutStrategieServeur()"
                 >
                     Ajouter
+                </button>
+
+                <button
+                    type="button"
+                    id="btn_modifier_strategie"
+                    class="btn btn-edit hide"
+                    onclick="majStrategieServeur()"
+                >
+                    Modifier
+                </button>
+
+                <button
+                    type="button"
+                    id="btn_annuler_strategie"
+                    class="btn btn-cancel hide"
+                    onclick="clearFormStrategie()"
+                >
+                    Annuler
                 </button>
 
                 <button
@@ -83,6 +112,8 @@
                 <tr>
                     <th>ID</th>
                     <th>Nom de la stratégie</th>
+                    <th>Modifier</th>
+                    <th>Supprimer</th>
                 </tr>
             </thead>
 

@@ -30,9 +30,20 @@ class Save_reseau
 
         unset($objCrypto);
 
-        // Retour à la page de gestion des réseaux.
-        header("Location: gestion_reseaux");
-        exit;
+        /*
+        * Lors d'un appel classique du formulaire,
+        * retour vers la page de gestion.
+        *
+        * Lors d'un appel AJAX avec bJSON = 1,
+        * route.php chargera la vue JSON.
+        */
+        if (
+            !isset($this->VARS_HTML["bJSON"])
+            || $this->VARS_HTML["bJSON"] != 1
+        ) {
+            header("Location: gestion_reseaux");
+            exit;
+        }
     }
 }
 

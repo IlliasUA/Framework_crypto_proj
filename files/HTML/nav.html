@@ -1,6 +1,24 @@
 <div style="display: flex; justify-content: space-between; align-items: center;">
-    
-    <div id="welcome-message"><p>Tu es connecté !</p></div>
+    <div class="navigation-identity">
+        <div id="welcome-message">
+            <p>Tu es connecté !</p>
+        </div>
+
+        <a
+            id="navigation-brand"
+            class="brand"
+            href="index"
+            aria-label="Accueil My Crypto Wallet"
+        >
+            <img
+                class="brand-logo"
+                src="images/Bitcoin_Cash.png"
+                alt="Logo My Crypto Wallet"
+            >
+            <span>My Crypto Wallet</span>
+        </a>
+    </div>
+
     <div class="navigation-actions">
     <button
         type="button"
@@ -46,9 +64,18 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const message = document.getElementById("welcome-message");
+        const brand = document.getElementById("navigation-brand");
+
+        if (!message || !brand) {
+            return;
+        }
 
         setTimeout(function () {
             message.classList.add("welcome-message-hidden");
+
+            setTimeout(function () {
+                brand.classList.add("brand-visible");
+            }, 400);
         }, 3000);
     });
 </script>

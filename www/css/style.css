@@ -330,12 +330,41 @@ textarea {
 .hide {
     display: none;
 }
+
+/* Identité affichée à gauche de la navigation */
+
+.navigation-actions {
+    display: flex;
+    margin-left: auto;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.navigation-identity {
+    position: relative;
+    width: 180px;
+    height: 34px;
+    flex-shrink: 0;
+}
+
+#welcome-message,
+.navigation-identity .brand {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 34px;
+}
+
 #welcome-message {
+    display: flex;
+    align-items: center;
     opacity: 1;
     visibility: visible;
+    transform: translateY(0);
     transition:
         opacity 400ms ease,
-        visibility 400ms ease;
+        visibility 400ms ease,
+        transform 400ms ease;
 }
 
 #welcome-message p {
@@ -347,4 +376,41 @@ textarea {
 #welcome-message.welcome-message-hidden {
     opacity: 0;
     visibility: hidden;
+    transform: translateY(-6px);
+}
+
+.navigation-identity .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #102f49;
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-decoration: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition:
+        opacity 400ms ease,
+        visibility 400ms ease,
+        transform 400ms ease;
+}
+
+.navigation-identity .brand.brand-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.navigation-identity .brand-logo {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 12px rgba(16, 47, 73, 0.12));
+}
+
+.navigation-identity .brand:focus-visible {
+    border-radius: 6px;
+    outline: 3px solid rgba(234, 165, 46, 0.55);
+    outline-offset: 4px;
 }

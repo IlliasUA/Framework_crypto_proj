@@ -30,9 +30,13 @@ class Save_strategie
 
         unset($objCrypto);
 
-        // Retour à la page de gestion des stratégies.
-        header("Location: gestion_strategies");
-        exit;
+        if (
+            !isset($this->VARS_HTML["bJSON"])
+            || $this->VARS_HTML["bJSON"] != 1
+        ) {
+            header("Location: gestion_strategies");
+            exit;
+        }
     }
 }
 

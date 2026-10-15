@@ -30,9 +30,13 @@ class Save_notification
 
         unset($objCrypto);
 
-        // Retour à la page de gestion des notifications.
-        header("Location: gestion_notifications");
-        exit;
+        if (
+            !isset($this->VARS_HTML["bJSON"])
+            || $this->VARS_HTML["bJSON"] != 1
+        ) {
+            header("Location: gestion_notifications");
+            exit;
+        }
     }
 }
 

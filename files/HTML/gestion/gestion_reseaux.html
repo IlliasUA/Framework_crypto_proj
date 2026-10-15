@@ -26,18 +26,24 @@
     </header>
 
     <section class="form-section">
-        <h2>Ajouter un réseau</h2>
+        <h2 id="form_title_reseau">
+            Ajouter un réseau
+        </h2>
 
         <form
             id="form_reseau"
             method="post"
-            action="route.php"
-        >
+            action="route.php">
             <input
                 type="hidden"
                 name="page"
-                value="save_reseau"
-            >
+                value="save_reseau">
+
+            <input
+                type="hidden"
+                id="id_reseau"
+                name="id_reseau"
+                value="">
 
             <div class="form-group">
                 <label for="nom_blockchain">
@@ -50,23 +56,40 @@
                     name="nom_blockchain"
                     maxlength="50"
                     placeholder="Exemple : Polygon"
-                    required
-                >
+                    required>
             </div>
 
             <div class="form-actions">
-                <button
-                    type="submit"
+               <button
+                    type="button"
+                    id="btn_ajouter_reseau"
                     class="btn btn-add"
-                >
+                    onclick="ajoutReseauServeur()">
                     Ajouter
+                </button>
+
+
+
+                <button
+                    type="button"
+                    id="btn_modifier_reseau"
+                    class="btn btn-edit hide"
+                    onclick="majReseauServeur()">
+                    Modifier
+                </button>
+
+                <button
+                    type="button"
+                    id="btn_annuler_reseau"
+                    class="btn btn-cancel hide"
+                    onclick="clearFormReseau()">
+                    Annuler
                 </button>
 
                 <button
                     type="button"
                     class="btn btn-cancel"
-                    onclick="window.location.href='gestion_crypto'"
-                >
+                    onclick="window.location.href='gestion_crypto'">
                     Retour au portfolio
                 </button>
             </div>
@@ -83,6 +106,8 @@
                 <tr>
                     <th>ID</th>
                     <th>Nom du réseau</th>
+                    <th>Modifier</th>
+                    <th>Supprimer</th>
                 </tr>
             </thead>
 

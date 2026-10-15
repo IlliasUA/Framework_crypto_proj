@@ -26,7 +26,9 @@
     </header>
 
     <section class="form-section">
-        <h2>Ajouter un niveau de risque</h2>
+        <h2 id="form_title_risque">
+            Ajouter un niveau de risque
+        </h2>
 
         <form
             id="form_risque"
@@ -37,6 +39,13 @@
                 type="hidden"
                 name="page"
                 value="save_risque"
+            >
+
+            <input
+                type="hidden"
+                id="id_niveau_risque"
+                name="id_niveau_risque"
+                value=""
             >
 
             <div class="form-group">
@@ -56,10 +65,30 @@
 
             <div class="form-actions">
                 <button
-                    type="submit"
+                    type="button"
+                    id="btn_ajouter_risque"
                     class="btn btn-add"
+                    onclick="ajoutRisqueServeur()"
                 >
                     Ajouter
+                </button>
+
+                <button
+                    type="button"
+                    id="btn_modifier_risque"
+                    class="btn btn-edit hide"
+                    onclick="majRisqueServeur()"
+                >
+                    Modifier
+                </button>
+
+                <button
+                    type="button"
+                    id="btn_annuler_risque"
+                    class="btn btn-cancel hide"
+                    onclick="clearFormRisque()"
+                >
+                    Annuler
                 </button>
 
                 <button
@@ -83,6 +112,8 @@
                 <tr>
                     <th>ID</th>
                     <th>Niveau de risque</th>
+                    <th>Modifier</th>
+                    <th>Supprimer</th>
                 </tr>
             </thead>
 

@@ -633,5 +633,398 @@
                     $this->oBdd->getLastInsertId();
             }
         }
+
+        /**
+         * Modifie un réseau existant.
+         */
+        public function update_reseau()
+        {
+            $idReseau = isset($this->VARS_HTML["id_reseau"])
+                ? (int) $this->VARS_HTML["id_reseau"]
+                : 0;
+
+            $nomBlockchain =
+                isset($this->VARS_HTML["nom_blockchain"])
+                    ? trim($this->VARS_HTML["nom_blockchain"])
+                    : "";
+
+            if ($idReseau <= 0) {
+                $this->resultat["update_reseau"] = array(
+                    "error" => "L'identifiant du réseau est invalide."
+                );
+
+                return;
+            }
+
+            if ($nomBlockchain == "") {
+                $this->resultat["update_reseau"] = array(
+                    "error" => "Le nom du réseau est obligatoire."
+                );
+
+                return;
+            }
+
+            $spathSQL = $this->GLOBALS_INI["PATH_HOME"]
+                . $this->GLOBALS_INI["PATH_SQL"]
+                . "update_reseau.sql";
+
+            $this->resultat["update_reseau"] =
+                $this->oBdd->treatDatas(
+                    $spathSQL,
+                    array(
+                        "id_reseau" => $idReseau,
+                        "nom_blockchain" => $nomBlockchain
+                    )
+                );
+        }
+
+        /**
+         * Supprime un réseau s'il n'est utilisé par aucune cryptomonnaie.
+         */
+        public function supprime_reseau()
+        {
+            $idReseau = isset($this->VARS_HTML["id_reseau"])
+                ? (int) $this->VARS_HTML["id_reseau"]
+                : 0;
+
+            if ($idReseau <= 0) {
+                $this->resultat["supprime_reseau"] = array(
+                    "error" => "L'identifiant du réseau est invalide."
+                );
+
+                return;
+            }
+
+            /*
+            * Vérification des cryptomonnaies qui utilisent ce réseau.
+            */
+            $spathCountSQL = $this->GLOBALS_INI["PATH_HOME"]
+                . $this->GLOBALS_INI["PATH_SQL"]
+                . "count_cryptomonnaies_reseau.sql";
+
+            $utilisations = $this->oBdd->getSelectDatas(
+                $spathCountSQL,
+                array(
+                    "id_reseau" => $idReseau
+                )
+            );
+
+            $totalUtilisations = isset($utilisations[0]["total"])
+                ? (int) $utilisations[0]["total"]
+                : 0;
+
+            if ($totalUtilisations > 0) {
+                $this->resultat["supprime_reseau"] = array(
+                    "error" =>
+                        "Ce réseau ne peut pas être supprimé car il est utilisé par "
+                        . $totalUtilisations
+                        . " cryptomonnaie(s)."
+                );
+
+                return;
+            }
+
+            /*
+            * Suppression du réseau.
+            */
+            $spathDeleteSQL = $this->GLOBALS_INI["PATH_HOME"]
+                . $this->GLOBALS_INI["PATH_SQL"]
+                . "delete_reseau.sql";
+
+            $this->resultat["supprime_reseau"] =
+                $this->oBdd->treatDatas(
+                    $spathDeleteSQL,
+                    array(
+                        "id_reseau" => $idReseau
+                    )
+                );
+        }
+
+        /**
+         * Modifie un type de notification existant.
+         */
+        public function update_notification()
+        {
+            $idNotification = isset($this->VARS_HTML["id_notification"])
+                ? (int) $this->VARS_HTML["id_notification"]
+                : 0;
+
+            $typeNotification =
+                isset($this->VARS_HTML["type_notification"])
+                    ? trim($this->VARS_HTML["type_notification"])
+                    : "";
+
+            if ($idNotification <= 0) {
+                $this->resultat["update_notification"] = array(
+                    "error" => "L'identifiant de la notification est invalide."
+                );
+                return;
+            }
+
+            if ($typeNotification == "") {
+                $this->resultat["update_notification"] = array(
+                    "error" => "Le type de notification est obligatoire."
+                );
+                return;
+            }
+
+            $spathSQL = $this->GLOBALS_INI["PATH_HOME"]
+                . $this->GLOBALS_INI["PATH_SQL"]
+                . "update_notification.sql";
+
+            $this->resultat["update_notification"] =
+                $this->oBdd->treatDatas(
+                    $spathSQL,
+                    array(
+                        "id_notification" => $idNotification,
+                        "type_notification" => $typeNotification
+                    )
+                );
+        }
+
+        /**
+         * Supprime une notification si elle n'est liée à aucune cryptomonnaie.
+         */
+        public function supprime_notification()
+        {
+            $idNotification = isset($this->VARS_HTML["id_notification"])
+                ? (int) $this->VARS_HTML["id_notification"]
+                : 0;
+
+            if ($idNotification <= 0) {
+                $this->resultat["supprime_notification"] = array(
+                    "error" => "L'identifiant de la notification est invalide."
+                );
+                return;
+            }
+
+            $spathCountSQL = $this->GLOBALS_INI["PATH_HOME"]
+                . $this->GLOBALS_INI["PATH_SQL"]
+                . "count_cryptomonnaies_notification.sql";
+
+            $utilisations = $this->oBdd->getSelectDatas(
+                $spathCountSQL,
+                array(
+                    "id_notification" => $idNotification
+                )
+            );
+
+            $totalUtilisations = isset($utilisations[0]["total"])
+                ? (int) $utilisations[0]["total"]
+                : 0;
+
+            if ($totalUtilisations > 0) {
+                $this->resultat["supprime_notification"] = array(
+                    "error" =>
+                        "Cette notification ne peut pas être supprimée car elle est utilisée par "
+                        . $totalUtilisations
+                        . " cryptomonnaie(s)."
+                );
+                return;
+            }
+
+            $spathDeleteSQL = $this->GLOBALS_INI["PATH_HOME"]
+                . $this->GLOBALS_INI["PATH_SQL"]
+                . "delete_notification.sql";
+
+            $this->resultat["supprime_notification"] =
+                $this->oBdd->treatDatas(
+                    $spathDeleteSQL,
+                    array(
+                        "id_notification" => $idNotification
+                    )
+                );
+        }
+
+        /**
+         * Modifie une stratégie existante.
+         */
+        public function update_strategie()
+        {
+            $idStrategie = isset($this->VARS_HTML["id_strategies"])
+                ? (int) $this->VARS_HTML["id_strategies"]
+                : 0;
+
+            $nomStrategie = isset($this->VARS_HTML["nom_strategies"])
+                ? trim($this->VARS_HTML["nom_strategies"])
+                : "";
+
+            if ($idStrategie <= 0) {
+                $this->resultat["update_strategie"] = array(
+                    "error" => "L'identifiant de la stratégie est invalide."
+                );
+                return;
+            }
+
+            if ($nomStrategie == "") {
+                $this->resultat["update_strategie"] = array(
+                    "error" => "Le nom de la stratégie est obligatoire."
+                );
+                return;
+            }
+
+            $spathSQL = $this->GLOBALS_INI["PATH_HOME"]
+                . $this->GLOBALS_INI["PATH_SQL"]
+                . "update_strategie.sql";
+
+            $this->resultat["update_strategie"] =
+                $this->oBdd->treatDatas(
+                    $spathSQL,
+                    array(
+                        "id_strategies" => $idStrategie,
+                        "nom_strategies" => $nomStrategie
+                    )
+                );
+        }
+
+        /**
+         * Supprime une stratégie si elle n'est liée à aucune cryptomonnaie.
+         */
+        public function supprime_strategie()
+        {
+            $idStrategie = isset($this->VARS_HTML["id_strategies"])
+                ? (int) $this->VARS_HTML["id_strategies"]
+                : 0;
+
+            if ($idStrategie <= 0) {
+                $this->resultat["supprime_strategie"] = array(
+                    "error" => "L'identifiant de la stratégie est invalide."
+                );
+                return;
+            }
+
+            $spathCountSQL = $this->GLOBALS_INI["PATH_HOME"]
+                . $this->GLOBALS_INI["PATH_SQL"]
+                . "count_cryptomonnaies_strategie.sql";
+
+            $utilisations = $this->oBdd->getSelectDatas(
+                $spathCountSQL,
+                array(
+                    "id_strategies" => $idStrategie
+                )
+            );
+
+            $totalUtilisations = isset($utilisations[0]["total"])
+                ? (int) $utilisations[0]["total"]
+                : 0;
+
+            if ($totalUtilisations > 0) {
+                $this->resultat["supprime_strategie"] = array(
+                    "error" =>
+                        "Cette stratégie ne peut pas être supprimée car elle est utilisée par "
+                        . $totalUtilisations
+                        . " cryptomonnaie(s)."
+                );
+                return;
+            }
+
+            $spathDeleteSQL = $this->GLOBALS_INI["PATH_HOME"]
+                . $this->GLOBALS_INI["PATH_SQL"]
+                . "delete_strategie.sql";
+
+            $this->resultat["supprime_strategie"] =
+                $this->oBdd->treatDatas(
+                    $spathDeleteSQL,
+                    array(
+                        "id_strategies" => $idStrategie
+                    )
+                );
+        }
+
+        /**
+         * Modifie un niveau de risque existant.
+         */
+        public function update_risque()
+        {
+            $idRisque = isset($this->VARS_HTML["id_niveau_risque"])
+                ? (int) $this->VARS_HTML["id_niveau_risque"]
+                : 0;
+
+            $nomRisque = isset($this->VARS_HTML["risque"])
+                ? trim($this->VARS_HTML["risque"])
+                : "";
+
+            if ($idRisque <= 0) {
+                $this->resultat["update_risque"] = array(
+                    "error" => "L'identifiant du niveau de risque est invalide."
+                );
+                return;
+            }
+
+            if ($nomRisque == "") {
+                $this->resultat["update_risque"] = array(
+                    "error" => "Le niveau de risque est obligatoire."
+                );
+                return;
+            }
+
+            $spathSQL = $this->GLOBALS_INI["PATH_HOME"]
+                . $this->GLOBALS_INI["PATH_SQL"]
+                . "update_risque.sql";
+
+            $this->resultat["update_risque"] =
+                $this->oBdd->treatDatas(
+                    $spathSQL,
+                    array(
+                        "id_niveau_risque" => $idRisque,
+                        "risque" => $nomRisque
+                    )
+                );
+        }
+
+        /**
+         * Supprime un niveau de risque s'il n'est utilisé par aucune cryptomonnaie.
+         */
+        public function supprime_risque()
+        {
+            $idRisque = isset($this->VARS_HTML["id_niveau_risque"])
+                ? (int) $this->VARS_HTML["id_niveau_risque"]
+                : 0;
+
+            if ($idRisque <= 0) {
+                $this->resultat["supprime_risque"] = array(
+                    "error" => "L'identifiant du niveau de risque est invalide."
+                );
+                return;
+            }
+
+            $spathCountSQL = $this->GLOBALS_INI["PATH_HOME"]
+                . $this->GLOBALS_INI["PATH_SQL"]
+                . "count_cryptomonnaies_risque.sql";
+
+            $utilisations = $this->oBdd->getSelectDatas(
+                $spathCountSQL,
+                array(
+                    "id_niveau_risque" => $idRisque
+                )
+            );
+
+            $totalUtilisations = isset($utilisations[0]["total"])
+                ? (int) $utilisations[0]["total"]
+                : 0;
+
+            if ($totalUtilisations > 0) {
+                $this->resultat["supprime_risque"] = array(
+                    "error" =>
+                        "Ce niveau de risque ne peut pas être supprimé car il est utilisé par "
+                        . $totalUtilisations
+                        . " cryptomonnaie(s)."
+                );
+                return;
+            }
+
+            $spathDeleteSQL = $this->GLOBALS_INI["PATH_HOME"]
+                . $this->GLOBALS_INI["PATH_SQL"]
+                . "delete_risque.sql";
+
+            $this->resultat["supprime_risque"] =
+                $this->oBdd->treatDatas(
+                    $spathDeleteSQL,
+                    array(
+                        "id_niveau_risque" => $idRisque
+                    )
+                );
+        }
+
     }  
 ?>

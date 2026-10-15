@@ -30,9 +30,13 @@ class Save_risque
 
         unset($objCrypto);
 
-        // Retour à la page de gestion des risques.
-        header("Location: gestion_risques");
-        exit;
+        if (
+            !isset($this->VARS_HTML["bJSON"])
+            || $this->VARS_HTML["bJSON"] != 1
+        ) {
+            header("Location: gestion_risques");
+            exit;
+        }
     }
 }
 
