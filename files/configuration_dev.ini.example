@@ -1,0 +1,11 @@
+[PATHS]
+PATH_HOME       = /var/www/
+PATH_FILES      = files/HTML/
+PATH_SQL        = files/SQL/
+PATH_CLASS      = modules/
+
+[DATABASE]
+DB_HOST         = db
+DB_LOGIN        = user
+DB_PSW          = ""
+DB_NAME         = crypto_wallet
