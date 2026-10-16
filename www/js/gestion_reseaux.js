@@ -186,8 +186,7 @@ function ajoutReseauServeur() {
         }
 
         ajoutReseau(
-            result["id_reseau_created"],
-            nomBlockchain
+            result["id_reseau_created"]
         );
     })
     .fail(function (error) {
@@ -205,10 +204,10 @@ function ajoutReseauServeur() {
 /**
  * Ajoute le réseau reçu du serveur au tableau JavaScript.
  */
-function ajoutReseau(idReseau, nomBlockchain) {
+function ajoutReseau(idReseau) {
     aOfReseaux.push({
         id_reseau: idReseau,
-        nom_blockchain: nomBlockchain
+        nom_blockchain: $('#nom_blockchain').val()
     });
 
     rebuildDataTableReseaux();

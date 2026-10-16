@@ -69,13 +69,13 @@ $oMain= new $myClass();
 $page_to_load = "route.html";
 
 /*
- * Les réponses JSON sont rangées dans HTML/lists.
+ * Les réponses JSON sont rangées dans HTML/JSON_encode.
  */
 if (
     isset($oMain->VARS_HTML["bJSON"])
     && $oMain->VARS_HTML["bJSON"] == 1
 ) {
-    $page_to_load = "lists/" . $monPHP . ".html";
+    $page_to_load = "JSON_encode/" . $monPHP . ".html";
 }
 /*
  * Les pages accessibles sans connexion restent dans HTML.
